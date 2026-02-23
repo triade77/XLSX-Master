@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>XlsxMaster</RootNamespace>
+    <AssemblyName>XLSX-Master</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+
+    <!-- NuGet 패키지 메타데이터 -->
+    <Version>1.0.0</Version>
+    <Authors>XLSX-Master Contributors</Authors>
+    <Company>XLSX-Master</Company>
+    <Product>XLSX-Master</Product>
+    <Description>
+      .NET Framework 4.8 Excel report generation wrapper library.
+      Combines ClosedXML (data/cells/sheets) and Open XML SDK (chart XML injection)
+      to build complex charts (combo, secondary axis, multi-series) via a Fluent API.
+    </Description>
+    <PackageTags>excel;xlsx;chart;closedxml;openxml;report;fluent</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>Copyright © 2025 XLSX-Master Contributors</Copyright>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.102.3" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- .NET Framework 4.8에서 ZipArchive 사용을 위해 명시적 참조 필요 -->
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+
+</Project>
