@@ -20,16 +20,79 @@ Fluent API로 복잡한 차트(콤보/보조축/다중계열)를 손쉽게 생�
 
 ## 설치
 
-### 프로젝트 직접 참조
+상황에 따라 세 가지 방법 중 하나를 선택하세요.
+
+---
+
+### 방법 1 — 프로젝트 참조 (같은 솔루션)
+
+소스를 함께 수정하면서 사용할 때 가장 적합합니다.
 
 ```xml
-<!-- .csproj -->
+<!-- 사용할 프로젝트의 .csproj -->
 <ItemGroup>
   <ProjectReference Include="..\XLSX-Master\src\XLSX-Master\XLSX-Master.csproj" />
 </ItemGroup>
 ```
 
-### 의존 패키지 (NuGet)
+---
+
+### 방법 2 — DLL 직접 참조
+
+빌드된 DLL 파일만 배포받아 참조할 때 사용합니다.
+
+**1. DLL 빌드**
+
+```bash
+dotnet build src/XLSX-Master/XLSX-Master.csproj -c Release
+# 출력: src/XLSX-Master/bin/Release/net48/XLSX-Master.dll
+```
+
+**2. 사용할 프로젝트의 `.csproj`에 추가**
+
+`XLSX-Master.dll`을 프로젝트의 `lib\` 폴더에 복사한 뒤:
+
+```xml
+<ItemGroup>
+  <Reference Include="XLSX-Master">
+    <HintPath>lib\XLSX-Master.dll</HintPath>
+  </Reference>
+</ItemGroup>
+
+<!-- 의존 패키지는 NuGet으로 별도 설치 -->
+<ItemGroup>
+  <PackageReference Include="ClosedXML" Version="0.102.3" />
+  <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
+</ItemGroup>
+```
+
+---
+
+### 방법 3 — 로컬 NuGet 패키지
+
+여러 프로젝트에서 패키지처럼 관리할 때 사용합니다.
+
+**1. `.nupkg` 생성**
+
+```bash
+dotnet pack src/XLSX-Master/XLSX-Master.csproj -c Release -o ./nupkg
+```
+
+**2. 로컬 NuGet 피드 등록**
+
+```bash
+dotnet nuget add source "D:\1_Work\XLSX-Master\nupkg" --name LocalXlsxMaster
+```
+
+**3. 사용할 프로젝트에서 설치**
+
+```bash
+dotnet add package XLSX-Master
+```
+
+---
+
+### 의존 패키지 (공통)
 
 | 패키지 | 버전 |
 |--------|------|
