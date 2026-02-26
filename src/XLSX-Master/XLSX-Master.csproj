@@ -1,44 +1,77 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A2B3C4D-5E6F-7A8B-9C0D-E1F2A3B4C5D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XlsxMaster</RootNamespace>
     <AssemblyName>XLSX-Master</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
     <LangVersion>7.3</LangVersion>
-    <Nullable>disable</Nullable>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Deterministic>true</Deterministic>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
 
-    <!-- NuGet 패키지 메타데이터 -->
-    <Version>1.0.0</Version>
-    <Authors>XLSX-Master Contributors</Authors>
-    <Company>XLSX-Master</Company>
-    <Product>XLSX-Master</Product>
-    <Description>
-      .NET Framework 4.8 Excel report generation wrapper library.
-      Combines ClosedXML (data/cells/sheets) and Open XML SDK (chart XML injection)
-      to build complex charts (combo, secondary axis, multi-series) via a Fluent API.
-    </Description>
-    <PackageTags>excel;xlsx;chart;closedxml;openxml;report;fluent</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryType>git</RepositoryType>
-    <Copyright>Copyright © 2025 XLSX-Master Contributors</Copyright>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="ClosedXML">
+      <Version>0.102.3</Version>
+    </PackageReference>
+    <PackageReference Include="DocumentFormat.OpenXml">
+      <Version>2.20.0</Version>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.102.3" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- .NET Framework 4.8에서 ZipArchive 사용을 위해 명시적 참조 필요 -->
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="Charts\AxisPosition.cs" />
+    <Compile Include="Charts\ChartBuildOptions.cs" />
+    <Compile Include="Charts\ChartType.cs" />
+    <Compile Include="Charts\ChartXmlGenerator.cs" />
+    <Compile Include="Charts\MasterChartBuilder.cs" />
+    <Compile Include="Charts\MarkerStyle.cs" />
+    <Compile Include="Charts\ScatterSeriesDefinition.cs" />
+    <Compile Include="Charts\SeriesDefinition.cs" />
+    <Compile Include="Core\ChartRegistry.cs" />
+    <Compile Include="Core\XlsxChartInjector.cs" />
+    <Compile Include="Extensions\RangeExtensions.cs" />
+    <Compile Include="Extensions\WorkbookExtensions.cs" />
+    <Compile Include="Extensions\WorksheetDataExtensions.cs" />
+    <Compile Include="Extensions\WorksheetExtensions.cs" />
+    <Compile Include="Helpers\EmuCalculator.cs" />
+    <Compile Include="Helpers\RidManager.cs" />
+    <Compile Include="InternalsVisible.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
