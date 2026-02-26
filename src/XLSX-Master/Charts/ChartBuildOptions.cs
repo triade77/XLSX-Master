@@ -25,6 +25,7 @@ namespace XlsxMaster.Charts
         // ── 보조 Y축 ──────────────────────────────────────────────────
         public double? SecondaryYAxisMin   { get; set; }
         public double? SecondaryYAxisMax   { get; set; }
+        public string  SecondaryYAxisTitle { get; set; }
 
         // ── X축 ───────────────────────────────────────────────────────
         public string XAxisTitle { get; set; }

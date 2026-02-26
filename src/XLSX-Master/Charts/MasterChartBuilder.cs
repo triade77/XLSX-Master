@@ -37,6 +37,7 @@ namespace XlsxMaster.Charts
         // ── 보조 Y축 ─────────────────────────────────────────────────
         private double? _secondaryYAxisMin;
         private double? _secondaryYAxisMax;
+        private string  _secondaryYAxisTitle;
 
         // ── X축 ─────────────────────────────────────────────────────
         private string _xAxisTitle;
@@ -189,6 +190,9 @@ namespace XlsxMaster.Charts
         /// <summary>보조 Y축의 최댓값을 지정합니다.</summary>
         public MasterChartBuilder SetSecondaryYAxisMax(double max) { _secondaryYAxisMax = max; return this; }
 
+        /// <summary>보조 Y축 제목 텍스트를 설정합니다.</summary>
+        public MasterChartBuilder SetSecondaryYAxisTitle(string title) { _secondaryYAxisTitle = title; return this; }
+
         // ── X축 ─────────────────────────────────────────────────────
 
         /// <summary>X축(카테고리 축) 제목 텍스트를 설정합니다.</summary>
@@ -230,8 +234,9 @@ namespace XlsxMaster.Charts
                 YAxisMin         = _yAxisMin,
                 YAxisMax         = _yAxisMax,
                 YAxisTitle       = _yAxisTitle,
-                SecondaryYAxisMin = _secondaryYAxisMin,
-                SecondaryYAxisMax = _secondaryYAxisMax,
+                SecondaryYAxisMin   = _secondaryYAxisMin,
+                SecondaryYAxisMax   = _secondaryYAxisMax,
+                SecondaryYAxisTitle = _secondaryYAxisTitle,
                 XAxisTitle       = _xAxisTitle,
             };
 

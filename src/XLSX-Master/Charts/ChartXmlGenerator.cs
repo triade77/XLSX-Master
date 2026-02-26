@@ -134,7 +134,7 @@ namespace XlsxMaster.Charts
                             title: null, isSecondary: true));
                         plotArea.Append(BuildValueAxis(SecondaryValAxId, SecondaryAxId,
                             isSecondary: true,
-                            options.SecondaryYAxisMin, options.SecondaryYAxisMax, title: null));
+                            options.SecondaryYAxisMin, options.SecondaryYAxisMax, options.SecondaryYAxisTitle));
                     }
                 }
             }
