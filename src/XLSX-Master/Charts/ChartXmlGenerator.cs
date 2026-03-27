@@ -14,6 +14,9 @@ namespace XlsxMaster.Charts
     /// </summary>
     internal static class ChartXmlGenerator
     {
+        // Line 기본 두께: 0.75pt = 9525 EMU
+        private const int DefaultLineWidthEmu = 9525;
+
         // 주축 ID
         private const uint PrimaryAxId    = 1u;
         private const uint PrimaryValAxId = 2u;
@@ -253,8 +256,7 @@ namespace XlsxMaster.Charts
             ser.Append(new C.Index { Val = (uint)index });
             ser.Append(new Order { Val = (uint)index });
             ser.Append(BuildSeriesText(series.Name));
-            if (series.HexColor != null)
-                ser.Append(BuildShapeProperties(series.HexColor));
+            ser.Append(BuildLineShapeProperties(series.HexColor));
             if (series.MarkerStyle != MarkerStyle.Auto)
                 ser.Append(BuildMarker(series.MarkerStyle));
             if (showDataLabels)
@@ -419,7 +421,7 @@ namespace XlsxMaster.Charts
             ax.Append(new MinorTickMark { Val = TickMarkValues.None });
             ax.Append(new TickLabelPosition { Val = TickLabelPositionValues.NextTo });
             ax.Append(new CrossingAxis { Val = crossAxId });
-            ax.Append(new Crosses { Val = CrossesValues.AutoZero });
+            ax.Append(new Crosses { Val = isSecondary ? CrossesValues.Maximum : CrossesValues.AutoZero });
             ax.Append(new CrossBetween { Val = CrossBetweenValues.Between });
             return ax;
         }
@@ -504,6 +506,14 @@ namespace XlsxMaster.Charts
                     new A.RgbColorModelHex { Val = hexColor }
                 )
             );
+        }
+
+        private static C.ChartShapeProperties BuildLineShapeProperties(string hexColor)
+        {
+            var outline = new A.Outline { Width = DefaultLineWidthEmu };
+            if (hexColor != null)
+                outline.Append(new A.SolidFill(new A.RgbColorModelHex { Val = hexColor }));
+            return new C.ChartShapeProperties(outline);
         }
 
         private static DataLabels BuildDataLabels()
